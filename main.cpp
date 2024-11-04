@@ -1,7 +1,7 @@
 /*
     Lab 28: Goat 3K from Lab 24
         1. Expand the main menu of this program by adding 8 more options that feature different STL algorithms.
-        
+
         Design decisions:
             Planning to add:
             1. find()
@@ -9,7 +9,7 @@
             3. accumulate() to get average age of goats
             4. shuffle()
             5. reverse()
-            6. sort()
+            6. any_of()
             7. transform()
             8. for_each()
 */
@@ -21,6 +21,7 @@
 #include <algorithm> // for additional container functions
 #include <numeric>
 #include <set>
+#include <random> // required for random engine
 #include "Goat.h"
 using namespace std;
 
@@ -31,12 +32,12 @@ void add_goat(list<Goat> &trip, string[], string[]);
 void display_trip(list<Goat> trip);
 int main_menu();                      // outputs prompt and collects user selection
 bool isValidOption(string, int, int); // helper function to validate user input
-void FindGoat(const list<Goat> const &trip);
+void FindGoat(const list<Goat> &trip);
 void ClearGoats(list<Goat> &trip);
 void AverageAge(const list<Goat> &trip);
 void ShuffleGoats(list<Goat> &trip);
 void ReverseGoatOrder(list<Goat> &trip);
-void SortGoats(list<Goat> &trip);
+void AnyGoatsOver10(list<Goat> &trip);
 void TransformAgeMinusOne(list<Goat> &trip);
 void AddOneYearForEachGoat(list<Goat> &trip);
 
@@ -154,7 +155,7 @@ void display_trip(list<Goat> trip)
         cout << "No goats in current trip." << "\n\n";
         return;
     }
-    
+
     int count = 0;
     cout << "Trip:" << "\n";
     for (auto it = trip.begin(); it != trip.end(); it++)
@@ -189,8 +190,9 @@ void delete_goat(list<Goat> &trip)
         if (isValidOption(userInput, 1, trip.size()))
         {
             advance(it, stoi(userInput) - 1); // -1 because index displayed to users starts at 1
-            cout << "\n" << "Updated Trip After Removing: " << it->get_name() << " (" << it->get_age() << ", " << it->get_color() << ")\n";
-            trip.erase(it);            
+            cout << "\n"
+                 << "Updated Trip After Removing: " << it->get_name() << " (" << it->get_age() << ", " << it->get_color() << ")\n";
+            trip.erase(it);
             display_trip(trip);
             break;
         }
@@ -200,13 +202,14 @@ void delete_goat(list<Goat> &trip)
 // FUNCTIONS ADDED FOR LAB 28
 // finds a goat based on name
 // couldn't figure out how to search for a Goat object with find()
-void FindGoat(const list<Goat> const &trip){
+void FindGoat(const list<Goat> &trip)
+{
     if (trip.empty())
     {
         cout << "No goats in current trip to find." << "\n\n";
         return;
     }
-    
+
     string name = "";
 
     cout << "Please enter goat name to find: ";
@@ -219,13 +222,15 @@ void FindGoat(const list<Goat> const &trip){
         if (it->get_name() == name)
         {
             cout << "Goat: " << it->get_name() << " FOUND!\n";
+            break;
         }
     }
     cout << "\n";
 }
 
 // clears entire list of goats
-void ClearGoats(list<Goat> &trip){
+void ClearGoats(list<Goat> &trip)
+{
     if (trip.empty())
     {
         cout << "No goats in current trip to find." << "\n\n";
@@ -238,33 +243,81 @@ void ClearGoats(list<Goat> &trip){
 }
 
 // outputs average age of goat herd after using accumulate
-void AverageAge(const list<Goat> &trip){
-    accumulate(trip.begin(), trip.end(), [](int sum, const Goat& goat) {
-                                        sum + goat.get_age();
-                                    });
+void AverageAge(const list<Goat> &trip)
+{
+    if (trip.empty())
+    {
+        cout << "No goats in current trip." << "\n\n";
+        return;
+    }
+
+    // compiler didn't recognize accumulate
+    // accumulate(trip.begin(), trip.end(), [](int &sum, const Goat &goat)
+    //            { sum += goat.get_age(); });
+
+    int sum = 0;
+    int count = 0;
+    for (auto it = trip.begin(); it != trip.end(); it++)
+    {
+        sum += it->get_age();
+        count++;
+    }
+
+    cout << "Average goat age: " << sum/count << "\n\n";
 }
 
 // shuffles list of goats in random order
-void ShuffleGoats(list<Goat> &trip){
+void ShuffleGoats(list<Goat> &trip)
+{
+    if (trip.empty())
+    {
+        cout << "No goats in current trip." << "\n\n";
+        return;
+    }
 
+    shuffle(trip.begin(), trip.end(), default_random_engine());
+
+    cout << "Trip after shuffle:\n";
+    display_trip(trip);
 }
 
 // reversed order of goats in list
-void ReverseGoatOrder(list<Goat> &trip){
+void ReverseGoatOrder(list<Goat> &trip)
+{
+    if (trip.empty())
+    {
+        cout << "No goats in current trip." << "\n\n";
+        return;
+    }
 
+    reverse(trip.begin(), trip.end());
+
+    cout << "Trip after reverse:\n";
+    display_trip(trip);
 }
 
 // sorts goats by name
-void SortGoats(list<Goat> &trip){
+void AnyGoatsOver10(list<Goat> &trip)
+{
+    if (trip.empty())
+    {
+        cout << "No goats in current trip." << "\n\n";
+        return;
+    }
 
+    bool hasHighScore = any_of(scores.begin(), scores.end(), [](int score) { return score > 90; });
+cout << "Has high score: " << (hasHighScore ? "Yes" : "No") << endl;
+
+    cout << "Trip after shuffle:\n";
+    display_trip(trip);
 }
 
 // uses transform to deduct 1 from age
-void TransformAgeMinusOne(list<Goat> &trip){
-
+void TransformAgeMinusOne(list<Goat> &trip)
+{
 }
 
 // adds a year to each goat using for_each()
-void AddOneYearForEachGoat(list<Goat> &trip){
-
+void AddOneYearForEachGoat(list<Goat> &trip)
+{
 }
