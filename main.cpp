@@ -78,6 +78,30 @@ int main()
         case 3:
             display_trip(trip);
             break;
+        case 4:
+            add_goat(trip, names, colors);
+            break;
+        case 5:
+            delete_goat(trip);
+            break;
+        case 6:
+            display_trip(trip);
+            break;
+        case 7:
+            add_goat(trip, names, colors);
+            break;
+        case 8:
+            delete_goat(trip);
+            break;
+        case 9:
+            display_trip(trip);
+            break;
+        case 10:
+            add_goat(trip, names, colors);
+            break;
+        case 11:
+            delete_goat(trip);
+            break;
         default:
             break;
         }
@@ -98,7 +122,15 @@ int main_menu()
              << "[1] Add a goat" << "\n"
              << "[2] Delete a goat" << "\n"
              << "[3] List goats" << "\n"
-             << "[4] Quit" << "\n"
+             << "[4] Find goat" << "\n"
+             << "[5] Clear goats" << "\n"
+             << "[6] Get average age" << "\n"
+             << "[7] Shuffle list" << "\n"
+             << "[8] Reverse lsit" << "\n"
+             << "[9] Any goats over 10" << "\n"
+             << "[10] Minus 1 to goat ages" << "\n"
+             << "[11] Plus 1 to goat ages" << "\n"
+             << "[12] Quit" << "\n"
              << "Choice --> ";
         getline(cin, userInput); // get user input as string and test
         cout << "\n";
@@ -263,7 +295,7 @@ void AverageAge(const list<Goat> &trip)
         count++;
     }
 
-    cout << "Average goat age: " << sum/count << "\n\n";
+    cout << "Average goat age: " << sum / count << "\n\n";
 }
 
 // shuffles list of goats in random order
@@ -305,19 +337,40 @@ void AnyGoatsOver10(list<Goat> &trip)
         return;
     }
 
-    bool hasHighScore = any_of(scores.begin(), scores.end(), [](int score) { return score > 90; });
-cout << "Has high score: " << (hasHighScore ? "Yes" : "No") << endl;
-
-    cout << "Trip after shuffle:\n";
-    display_trip(trip);
+    bool goatOver10 = any_of(trip.begin(), trip.end(), [](Goat &goat)
+                             { return goat.get_age() > 10; });
+    cout << "Any goats over 10: " << (goatOver10 ? "Yes" : "No") << endl
+         << endl;
 }
 
 // uses transform to deduct 1 from age
 void TransformAgeMinusOne(list<Goat> &trip)
 {
+    if (trip.empty())
+    {
+        cout << "No goats in current trip." << "\n\n";
+        return;
+    }
+
+    transform(trip.begin(), trip.end(), trip.begin(), [](Goat &goat)
+              { return goat.set_age(goat.get_age() - 1); });
+    cout << "Goat age deducted by 1" << endl
+         << endl;
+    display_trip(trip);
 }
 
 // adds a year to each goat using for_each()
 void AddOneYearForEachGoat(list<Goat> &trip)
 {
+    if (trip.empty())
+    {
+        cout << "No goats in current trip." << "\n\n";
+        return;
+    }
+
+    for_each(trip.begin(), trip.end(), [](Goat &goat)
+             { return goat.set_age(goat.get_age() 11); });
+    cout << "Goat age + 1 for each." << endl
+         << endl;
+    display_trip(trip);
 }
