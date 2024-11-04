@@ -1,29 +1,39 @@
 /*
-    Lab 24: Goat 3K from Lab 23 implemented as a set
-    OBJECTIVES
-    Task One: implement Goat 3K as a set instead of a list
+    Lab 28: Goat 3K from Lab 24
+        1. Expand the main menu of this program by adding 8 more options that feature different STL algorithms.
+        
+        Design decisions:
+            Planning to add:
+            1. find()
+            2. clear()
+            3. accumulate() to get average age of goats
+            4. shuffle()
+            5. reverse()
+            6. sort()
+            7. transform()
+            8. for_each()
 */
 
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-// #include <list>
+#include <list>
 #include <set>
 #include "Goat.h"
 using namespace std;
 
 const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
 
-int select_goat(set<Goat> trip);
-void delete_goat(set<Goat> &trip);
-void add_goat(set<Goat> &trip, string[], string[]);
-void display_trip(set<Goat> trip);
+int select_goat(list<Goat> trip);
+void delete_goat(list<Goat> &trip);
+void add_goat(list<Goat> &trip, string[], string[]);
+void display_trip(list<Goat> trip);
 int main_menu();                      // outputs prompt and collects user selection
 bool isValidOption(string, int, int); // helper function to validate user input
 
 int main()
 {
-    set<Goat> trip = {};
+    list<Goat> trip = {};
     srand(static_cast<unsigned int>(time(nullptr)));
     bool again;
     int userSelectedOption = 0; // represents user option chosen from menu
@@ -116,19 +126,19 @@ bool isValidOption(string userInput, int minOption, int maxOption)
 }
 
 // adds random goat to trip
-void add_goat(set<Goat> &trip, string names[], string colors[])
+void add_goat(list<Goat> &trip, string names[], string colors[])
 {
     string name = names[rand() % SZ_NAMES];
     int age = rand() % MAX_AGE + 1;
     string color = colors[rand() % SZ_COLORS];
 
-    trip.insert(Goat(name, age, color));
+    trip.push_back(Goat(name, age, color));
 
     cout << "Added to trip: " << name << " (" << age << ", " << color << ")" << "\n\n";
 }
 
 // directly outputs trip to console
-void display_trip(set<Goat> trip)
+void display_trip(list<Goat> trip)
 {
     if (trip.size() < 1)
     {
@@ -146,7 +156,7 @@ void display_trip(set<Goat> trip)
 }
 
 // lets user select a Goat to delete
-void delete_goat(set<Goat> &trip)
+void delete_goat(list<Goat> &trip)
 {
     // guard statement in case of empty list
     if (trip.size() < 1)
