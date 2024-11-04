@@ -79,33 +79,33 @@ int main()
             display_trip(trip);
             break;
         case 4:
-            add_goat(trip, names, colors);
+            FindGoat(trip);
             break;
         case 5:
-            delete_goat(trip);
+            ClearGoats(trip);
             break;
         case 6:
-            display_trip(trip);
+            AverageAge(trip);
             break;
         case 7:
-            add_goat(trip, names, colors);
+            ShuffleGoats(trip);
             break;
         case 8:
-            delete_goat(trip);
+            ReverseGoatOrder(trip);
             break;
         case 9:
-            display_trip(trip);
+            AnyGoatsOver10(trip);
             break;
         case 10:
-            add_goat(trip, names, colors);
+            TransformAgeMinusOne(trip);
             break;
         case 11:
-            delete_goat(trip);
+            AddOneYearForEachGoat(trip);
             break;
         default:
             break;
         }
-    } while (userSelectedOption != 4);
+    } while (userSelectedOption != 12);
 
     return 0;
 }
@@ -369,7 +369,7 @@ void AddOneYearForEachGoat(list<Goat> &trip)
     }
 
     for_each(trip.begin(), trip.end(), [](Goat &goat)
-             { return goat.set_age(goat.get_age() 11); });
+             { return goat.set_age(goat.get_age() + 1); });
     cout << "Goat age + 1 for each." << endl
          << endl;
     display_trip(trip);
