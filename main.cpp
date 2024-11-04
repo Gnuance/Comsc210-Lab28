@@ -198,7 +198,19 @@ void delete_goat(list<Goat> &trip)
 // FUNCTIONS ADDED FOR LAB 28
 // finds a goat based on name
 void FindGoat(const list<Goat> const &trip){
-
+    if (trip.size() < 1)
+    {
+        cout << "No goats in current trip." << "\n\n";
+        return;
+    }
+    
+    int count = 0;
+    cout << "Trip:" << "\n";
+    for (auto it = trip.begin(); it != trip.end(); it++)
+    {
+        cout << "\t[" << ++count << "] " << it->get_name() << " (" << it->get_age() << ", " << it->get_color() << ")" << "\n";
+    }
+    cout << "\n";
 }
 
 // clears entire list of goats
@@ -210,8 +222,28 @@ void ClearGoats(list<Goat> &trip){
 void AverageAge(const list<Goat> &trip){
 
 }
-void ShuffleGoats(list<Goat> &trip);
-void ReverseGoatOrder(list<Goat> &trip);
-void SortGoats(list<Goat> &trip);
-void TransformAgeMinusOne(list<Goat> &trip);
-void AddOneYearForEachGoat(list<Goat> &trip);
+
+// shuffles list of goats in random order
+void ShuffleGoats(list<Goat> &trip){
+
+}
+
+// reversed order of goats in list
+void ReverseGoatOrder(list<Goat> &trip){
+
+}
+
+// sorts goats by name
+void SortGoats(list<Goat> &trip){
+
+}
+
+// uses transform to deduct 1 from age
+void TransformAgeMinusOne(list<Goat> &trip){
+
+}
+
+// adds a year to each goat using for_each()
+void AddOneYearForEachGoat(list<Goat> &trip){
+
+}
