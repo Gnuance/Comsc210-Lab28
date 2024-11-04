@@ -24,12 +24,19 @@ using namespace std;
 
 const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
 
-int select_goat(list<Goat> trip);
 void delete_goat(list<Goat> &trip);
 void add_goat(list<Goat> &trip, string[], string[]);
 void display_trip(list<Goat> trip);
 int main_menu();                      // outputs prompt and collects user selection
 bool isValidOption(string, int, int); // helper function to validate user input
+void FindGoat(const list<Goat> const &trip);
+void ClearGoats(list<Goat> &trip);
+void AverageAge(const list<Goat> &trip);
+void ShuffleGoats(list<Goat> &trip);
+void ReverseGoatOrder(list<Goat> &trip);
+void SortGoats(list<Goat> &trip);
+void TransformAgeMinusOne(list<Goat> &trip);
+void AddOneYearForEachGoat(list<Goat> &trip);
 
 int main()
 {
@@ -187,3 +194,24 @@ void delete_goat(list<Goat> &trip)
         }
     } while (true);
 }
+
+// FUNCTIONS ADDED FOR LAB 28
+// finds a goat based on name
+void FindGoat(const list<Goat> const &trip){
+
+}
+
+// clears entire list of goats
+void ClearGoats(list<Goat> &trip){
+
+}
+
+// outputs average age of goat herd
+void AverageAge(const list<Goat> &trip){
+
+}
+void ShuffleGoats(list<Goat> &trip);
+void ReverseGoatOrder(list<Goat> &trip);
+void SortGoats(list<Goat> &trip);
+void TransformAgeMinusOne(list<Goat> &trip);
+void AddOneYearForEachGoat(list<Goat> &trip);
