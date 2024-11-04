@@ -18,6 +18,8 @@
 #include <fstream>
 #include <iomanip>
 #include <list>
+#include <algorithm> // for additional container functions
+#include <numeric>
 #include <set>
 #include "Goat.h"
 using namespace std;
@@ -197,30 +199,49 @@ void delete_goat(list<Goat> &trip)
 
 // FUNCTIONS ADDED FOR LAB 28
 // finds a goat based on name
+// couldn't figure out how to search for a Goat object with find()
 void FindGoat(const list<Goat> const &trip){
-    if (trip.size() < 1)
+    if (trip.empty())
     {
-        cout << "No goats in current trip." << "\n\n";
+        cout << "No goats in current trip to find." << "\n\n";
         return;
     }
     
-    int count = 0;
-    cout << "Trip:" << "\n";
+    string name = "";
+
+    cout << "Please enter goat name to find: ";
+    getline(cin, name);
+
+    // auto it = find(trip.begin(), trip.end(), )
+
     for (auto it = trip.begin(); it != trip.end(); it++)
     {
-        cout << "\t[" << ++count << "] " << it->get_name() << " (" << it->get_age() << ", " << it->get_color() << ")" << "\n";
+        if (it->get_name() == name)
+        {
+            cout << "Goat: " << it->get_name() << " FOUND!\n";
+        }
     }
     cout << "\n";
 }
 
 // clears entire list of goats
 void ClearGoats(list<Goat> &trip){
+    if (trip.empty())
+    {
+        cout << "No goats in current trip to find." << "\n\n";
+        return;
+    }
 
+    trip.clear();
+
+    cout << "Goat trip cleared." << "\n\n";
 }
 
-// outputs average age of goat herd
+// outputs average age of goat herd after using accumulate
 void AverageAge(const list<Goat> &trip){
-
+    accumulate(trip.begin(), trip.end(), [](int sum, const Goat& goat) {
+                                        sum + goat.get_age();
+                                    });
 }
 
 // shuffles list of goats in random order
